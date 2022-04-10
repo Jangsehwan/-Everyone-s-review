@@ -11,14 +11,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossOrigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossOrigin="anonymous"></script>
 
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
@@ -33,55 +32,45 @@
 </head>
 
 <body>
-<div class="container">
-    <img src="https://previews.123rf.com/images/maxxyustas/maxxyustas1511/maxxyustas151100002/47858355-education-concept-books-and-textbooks-on-the-bookshelf-3d.jpg"
-         class="img-fluid" alt="Responsive image">
-    <div class="info">
-        <h1>읽은 책에 대해 말씀해주세요.</h1>
-        <p>다른 사람을 위해 리뷰를 남겨주세요! 다 같이 좋은 책을 읽는다면 다 함께 행복해질 수 있지 않을까요?</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">제목</span>
-            </div>
-            <input type="text" class="form-control" id="title">
+    <div class="container">
+        <img src="https://previews.123rf.com/images/artursz/artursz1907/artursz190700324/126225477-%EB%8B%A8%EC%96%B4-%EC%93%B0%EA%B8%B0-%ED%85%8D%EC%8A%A4%ED%8A%B8-%EA%B2%80%ED%86%A0-%EC%8B%9C%EA%B0%84%EC%9E%85%EB%8B%88%EB%8B%A4-%EA%B3%B5%EC%8B%9D-%EC%8B%9C%ED%97%98%EC%97%90%EC%84%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%B4%EB%82%98-%EC%83%81%ED%99%A9%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B2%80%ED%86%A0%EB%A5%BC-%EB%B3%B4%EC%97%AC%EC%A3%BC%EB%8A%94-%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EC%82%AC%EC%A7%84.jpg"
+            class="img-fluid" alt="Responsive image" id="img">
+        <div class="info">
+            <h1>article, 책, 영화에 대해 솔직담백하게 의견을 말씀해주세요.</h1>
+            <p>익명성을 보장하는 리뷰를 남겨 다른 사람들과 의견을 나누고 소통하는 공간입니다! </p>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">저자</span>
+        <button onclick="openClose()" id="btn-post-box" type="button" class="btn btn-primary">포스팅 박스 열기 </button>
+        <div id="post-box" class="form-post" style="display:none">
+            <div>
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input id="title" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="link">URL</label>
+                    <input id="link" class="form-control" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="review">리뷰</label>
+                    <textarea id="review" class="form-control" rows="5" cols="30"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="makeReview()">리뷰 작성하기</button>
             </div>
-            <input type="text" class="form-control" id="author">
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">리뷰</span>
-            </div>
-            <textarea class="form-control" id="review"
-                      cols="30"
-                      rows="5" placeholder="140자까지 입력할 수 있습니다."></textarea>
-        </div>
-        <div class="review">
-            <button onclick="makeReview()" type="button" class="btn btn-primary">리뷰 작성하기</button>
+
+        <div id="cards-box" class="card-columns">
+            <!-- <div class="card">
+                <img class="card-img-top"
+                    src="https://www.eurail.com/content/dam/images/eurail/Italy%20OCP%20Promo%20Block.adaptive.767.1535627244182.jpg"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <a target="_blank" href="#" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
+                </div>
+            </div> -->
         </div>
     </div>
-    <div class="reviews">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">제목</th>
-                <th scope="col">저자</th>
-                <th scope="col">리뷰</th>
-            </tr>
-            </thead>
-            <tbody id="reviews-box">
-            <tr>
-                <td>8주 코딩</td>
-                <td>김르탄</td>
-                <td>프로젝트의 결과물이 매우 훌륭하군요!</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 </body>
 
 </html>
