@@ -17,12 +17,12 @@ function makeReview() {
     let title = $('#title').val()
     let link = $('#link').val()
     let review = $('#review').val()
-
+    let like = 0
 
     $.ajax({
         type: "POST",
         url: "/review-write",
-        data: {title_give: title, link_give: link, review_give: review},
+        data: {title_give: title, link_give: link, review_give: review, like_give : like},
         success: function (response) {
             alert(response["msg"]);
             window.location.reload();
@@ -43,16 +43,18 @@ function showReview() {
                 let title = reviews[i]['title']
                 let link = reviews[i]['link']
                 let review = reviews[i]['review']
+                let like = reviews[i]['like']
                 // let image = memos[i]['image']
                 // let desc = memos[i]['ob_desc']
                 // print(image, desc)
 
                 let temp_html = ` 
                 <div class="card">
-                    
+
                     <div class="card-body">
-                        <a target="_blank" href="#" class="card-title">${title}</a>
-                        <p class="card-text comment">${review}</p>
+                        <a target="_blank" href="${link}" class="card-title" id="title">${title}</a>
+                        <i class="fa-solid fa-thumbs-up" onclick="click_like()" id="like">${like}</i>
+                        <p class="card-text comment" id="review">${review}</p>
                     </div>
                 </div>`
 
@@ -61,4 +63,22 @@ function showReview() {
 
         }
     })
+}
+
+
+function click_like(){
+
+    let title = $('#title').val()
+
+    $.ajax({
+        type: "POST",
+        url: "/review-like",
+        data: {title_give : title},
+        success: function (response) {
+            print(response)
+            window.location.reload();
+        }
+    })
+
+
 }
