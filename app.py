@@ -2,9 +2,6 @@ from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request
 
 
-# _id값을 받아오기 위해 import
-from bson.objectid import ObjectId
-
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 db = client.dbstudy
@@ -24,13 +21,13 @@ def write_review():
     title_receive = request.form['title_give']
     link_receive = request.form['link_give']
     review_receive = request.form['review_give']
-    like_receive = request.form['like_give']
+    like_receive = 0
 
     doc = {
         'title': title_receive,
         'link': link_receive,
         'review': review_receive,
-        'like' : like_receive
+        'like' : 0
     }
     db.review.insert_one(doc)
     return jsonify({'msg': '저장 완료'})
@@ -39,17 +36,8 @@ def write_review():
 @app.route('/review-list', methods=['GET'])
 def read_reviews():
     reviews = list(db.review.find({}, {'_id': False}))
-    # reviews = objectIdDecoder(list(db.reveiw.find({})))
-    print(reviews)
+    # print(reviews)
     return jsonify({'all_reviews': reviews})
-
-# object값을 str로 바꾸는 함수
-# def objectIdDecoder(list):
-#     results = []
-#     for document in list:
-#         document['_id'] = str(document['_id'])
-#         results.append(document)
-#     return results
 
 
 @app.route('/review-delete', methods=['POST'])
@@ -62,10 +50,12 @@ def delete_reviews():
 @app.route('/review-like', methods=['POST'])
 def like_reviews():
     title_receive = request.form['title_give']
+    print(title_receive)
+
     review = db.review.find_one({"title" : title_receive})
     print(review)
 
-    like = review.get('like')
+    like = review['like']
     like_temp = like + 1
     like = like_temp
     print(like)

@@ -46,14 +46,19 @@ function showReview() {
                 let like = reviews[i]['like']
                 // let image = memos[i]['image']
                 // let desc = memos[i]['ob_desc']
-                // print(image, desc)
+
 
                 let temp_html = ` 
-                <div class="card">
-
+                <div class="card" xmlns="http://www.w3.org/1999/html">
                     <div class="card-body">
                         <a target="_blank" href="${link}" class="card-title" id="title">${title}</a>
-                        <i class="fa-solid fa-thumbs-up" onclick="click_like()" id="like">${like}</i>
+                        <a href="#" onclick="click_like('${title}')" id="like">
+                            <i class="fa-solid fa-thumbs-up">${like}</i>
+                        </a>
+                        <a href="#" onclick="delete_review('${title}')" class="card-footer-item has-text-danger">
+                            삭제
+<!--                            <span class="icon"><i class="fas fa-ban"></i></span>-->
+                        </a>
                         <p class="card-text comment" id="review">${review}</p>
                     </div>
                 </div>`
@@ -66,19 +71,27 @@ function showReview() {
 }
 
 
-function click_like(){
-
-    let title = $('#title').val()
-
+function click_like(title){
     $.ajax({
         type: "POST",
         url: "/review-like",
         data: {title_give : title},
         success: function (response) {
-            print(response)
+            console.log(response)
             window.location.reload();
         }
     })
+}
 
 
+function delete_review(title){
+
+    $.ajax({
+        type: "POST",
+        url: "/review-delete",
+        data: {title_give : title},
+        success: function (response) {
+            window.location.reload();
+        }
+    })
 }
